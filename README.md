@@ -16,12 +16,8 @@ cp .env.example .env
 
 ### 3. Configurar .env
 
-```env
-GITHUB_USERNAME=
-GITHUB_PASSWORD=
-BASE_URL=https://www.github.com
-REPO_NAME=portdata-repo-teste
-```
+Coloque as suas credenciais de login no .env.
+Observação: a conta não deve ter a Autenticação de 2 Fatores (2FA) habilitada.
 
 ## Execução de testes no Cypress
 
