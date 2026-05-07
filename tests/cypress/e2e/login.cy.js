@@ -7,6 +7,5 @@ describe("Login", () => {
     cy.submeteLogin();
 
     cy.validaLogin();
-
   });
 });
