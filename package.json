@@ -6,11 +6,14 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "cy:run:headed": "cypress run --headed",
+    "ts:check": "tsc --noEmit",
     "k6:run": "k6 run tests/k6/scenarios/load-test.js"
   },
   "devDependencies": {
+    "@types/node": "^25.6.2",
     "cypress": "^15.14.2",
     "cypress-xpath": "^2.0.1",
-    "dotenv": "^16.6.1"
+    "dotenv": "^16.6.1",
+    "typescript": "^6.0.3"
   }
 }

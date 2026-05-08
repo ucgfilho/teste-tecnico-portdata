@@ -1,14 +1,14 @@
-const { defineConfig } = require("cypress");
-const dotenv = require("dotenv");
+import { defineConfig } from "cypress";
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
-module.exports = defineConfig({
+export default defineConfig({
   e2e: {
     allowCypressEnv: false,
     baseUrl: "https://www.github.com",
-    specPattern: "tests/cypress/e2e/**/*.cy.js",
-    supportFile: "tests/cypress/support/e2e.js",
+    specPattern: "tests/cypress/e2e/**/*.cy.ts",
+    supportFile: "tests/cypress/support/e2e.ts",
     fixturesFolder: "tests/cypress/fixtures",
     screenshotsFolder: "tests/cypress/screenshots",
     videosFolder: "tests/cypress/videos",

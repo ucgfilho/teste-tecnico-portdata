@@ -6,6 +6,7 @@ describe("Repositório", () => {
     cy.preencheSenha();
     cy.submeteLogin();
   });
+
   it("Cria novo repositório utilizando XPath", () => {
     cy.acessaAbaRepositories();
     cy.selecionaRepositorio();

@@ -6,6 +6,7 @@ describe("Logout", () => {
     cy.preencheSenha();
     cy.submeteLogin();
   });
+
   it("Desloga conta do usuário", () => {
     cy.deslogaConta();
 
