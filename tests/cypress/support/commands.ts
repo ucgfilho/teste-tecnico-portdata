@@ -2,10 +2,6 @@ import variables from "../fixtures/variables.json";
 
 const { repoNome } = variables;
 
-// ---------------------------------------------------------------------------
-// Autenticação
-// ---------------------------------------------------------------------------
-
 Cypress.Commands.add("visitaPaginaLogin", () => {
   cy.visit("/login");
 });
@@ -16,8 +12,9 @@ Cypress.Commands.add("preencheUsuario", (usuario?: string) => {
     return;
   }
 
-  const githubUsername = Cypress.env("GITHUB_USERNAME") as string;
-  cy.get("#login_field").should("be.visible").clear().type(githubUsername);
+  cy.env(["GITHUB_USERNAME"]).then(({ GITHUB_USERNAME }) => {
+    cy.get("#login_field").should("be.visible").clear().type(GITHUB_USERNAME);
+  });
 });
 
 Cypress.Commands.add("preencheSenha", (senha?: string) => {
@@ -26,8 +23,9 @@ Cypress.Commands.add("preencheSenha", (senha?: string) => {
     return;
   }
 
-  const githubPassword = Cypress.env("GITHUB_PASSWORD") as string;
-  cy.get("#password").should("be.visible").clear().type(githubPassword);
+  cy.env(["GITHUB_PASSWORD"]).then(({ GITHUB_PASSWORD }) => {
+    cy.get("#password").should("be.visible").clear().type(GITHUB_PASSWORD);
+  });
 });
 
 Cypress.Commands.add("submeteLogin", () => {
@@ -40,14 +38,16 @@ Cypress.Commands.add(
     cy.url().should("include", urlEsperada);
     cy.get('[data-testid="github-avatar"]').click();
 
-    const nomeEsperado = usuario ?? (Cypress.env("GITHUB_USERNAME") as string);
-    cy.contains(nomeEsperado).should("exist").should("be.visible");
+    if (usuario) {
+      cy.contains(usuario).should("exist").should("be.visible");
+      return;
+    }
+
+    cy.env(["GITHUB_USERNAME"]).then(({ GITHUB_USERNAME }) => {
+      cy.contains(GITHUB_USERNAME).should("exist").should("be.visible");
+    });
   }
 );
-
-// ---------------------------------------------------------------------------
-// Repositório
-// ---------------------------------------------------------------------------
 
 Cypress.Commands.add("acessaAbaRepositories", () => {
   cy.get('a[href="/repos"]').click();
@@ -80,14 +80,16 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   "validaCriacaoRepositorio",
   (usuario?: string, nomeRepositorio: string = repoNome) => {
-    const nomeUsuario = usuario ?? (Cypress.env("GITHUB_USERNAME") as string);
-    cy.url().should("include", `/${nomeUsuario}/${nomeRepositorio}`);
+    if (usuario) {
+      cy.url().should("include", `/${usuario}/${nomeRepositorio}`);
+      return;
+    }
+
+    cy.env(["GITHUB_USERNAME"]).then(({ GITHUB_USERNAME }) => {
+      cy.url().should("include", `/${GITHUB_USERNAME}/${nomeRepositorio}`);
+    });
   }
 );
-
-// ---------------------------------------------------------------------------
-// Logout
-// ---------------------------------------------------------------------------
 
 Cypress.Commands.add("deslogaConta", () => {
   cy.get('[data-testid="github-avatar"]').click();
