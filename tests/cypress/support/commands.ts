@@ -98,5 +98,5 @@ Cypress.Commands.add("deslogaConta", () => {
 });
 
 Cypress.Commands.add("validaLogout", () => {
-  cy.get(".lp-Intro").should("exist").should("be.visible");
+  cy.get(".lp-Intro").should("be.visible");
 });
