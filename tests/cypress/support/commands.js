@@ -45,27 +45,28 @@ Cypress.Commands.add("validaLogin", (usuario, urlEsperada = "/") => {
 });
 
 Cypress.Commands.add("acessaAbaRepositories", () => {
-  cy.get(
-    "/html/body/div[1]/div[2]/react-partial[2]/div/header/div/div[3]/div[1]/div[3]/a[3]/svg",
-  ).click();
+  cy.get('a[href="/repos"]').click();
+  cy.contains("My repositories").click();
 });
 
 Cypress.Commands.add("selecionaRepositorio", () => {
-  cy.get('//*[@id="_r_i_-list-view-node-_r_q_"]').click();
+  cy.get('.ReposListItem-module__NwoTitle__l7gRA').first().click();
 });
 
 Cypress.Commands.add("acessaPullRequest", () => {
-  cy.get("/html/body/div[1]/div[2]/react-partial[2]/div/header/nav/ul/li[3]/a").click();
+  cy.contains("Pull requests").click();
+  cy.wait(1000);
 });
 
 Cypress.Commands.add("acessaCriacaoRepositorio", () => {
-  cy.get('//*[@id="_R_5jpb_"]/span[1]').click();
-  cy.get('//*[@id="_r_19_"]').click();
+  cy.get('#_R_5jpb_ > .prc-Button-ButtonContent-Iohp5').click();
+  cy.xpath('//a[@href="/new"]').click();
 });
 
 Cypress.Commands.add("insereDadosRepositorio", (nomeRepositorio = repoNome) => {
-  cy.get('//*[@id="repository-name-input"]').type(nomeRepositorio);
-  cy.get("/html/body/div[1]/div[6]/main/react-app/div/form/div[4]/button").click();
+  cy.get('#repository-name-input').clear().type(nomeRepositorio);
+  cy.wait(2000);
+  cy.contains('button', 'Create repository').click();
 });
 
 Cypress.Commands.add("validaCriacaoRepositorio", (usuario, nomeRepositorio = repoNome) => {
@@ -73,8 +74,19 @@ Cypress.Commands.add("validaCriacaoRepositorio", (usuario, nomeRepositorio = rep
     cy.url().should("include", `/${usuario}/${nomeRepositorio}`);
     return;
   }
-
+  
   cy.env(["GITHUB_USERNAME"]).then(({ GITHUB_USERNAME }) => {
     cy.url().should("include", `/${GITHUB_USERNAME}/${nomeRepositorio}`);
   });
+});
+
+Cypress.Commands.add("deslogaConta", () => {
+  cy.get('[data-testid="github-avatar"]').click();
+  cy.contains("Sign out").click();
+  cy.get('input[value="Sign out from all accounts"]')
+    .click();
+});
+
+Cypress.Commands.add("validaLogout", () => {
+  cy.contains('Entrar').should('be.visible');
 });

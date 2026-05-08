@@ -12,7 +12,7 @@ describe("Repositório", () => {
     cy.acessaPullRequest();
     cy.acessaCriacaoRepositorio();
     cy.insereDadosRepositorio();
-    
+
     cy.validaCriacaoRepositorio();
   });
 });
