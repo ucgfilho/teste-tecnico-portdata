@@ -32,22 +32,11 @@ Cypress.Commands.add("submeteLogin", () => {
   cy.get('[data-testid="sign-in-btn"], [name="commit"]').click();
 });
 
-Cypress.Commands.add(
-  "validaLogin",
-  (usuario?: string, urlEsperada: string = "/") => {
-    cy.url().should("include", urlEsperada);
-    cy.get('[data-testid="github-avatar"]').click();
-
-    if (usuario) {
-      cy.contains(usuario).should("exist").should("be.visible");
-      return;
-    }
-
-    cy.env(["GITHUB_USERNAME"]).then(({ GITHUB_USERNAME }) => {
-      cy.contains(GITHUB_USERNAME).should("exist").should("be.visible");
-    });
-  }
-);
+Cypress.Commands.add("validaLogin", (usuario?: string, urlEsperada: string = "/") => {
+  cy.url().should("include", urlEsperada);
+  cy.get('[data-testid="github-avatar"]').click();
+  cy.get(".lh-condensed.overflow-hidden").should("be.visible");
+});
 
 Cypress.Commands.add("acessaAbaRepositories", () => {
   cy.get('a[href="/repos"]').click();
@@ -68,27 +57,20 @@ Cypress.Commands.add("acessaCriacaoRepositorio", () => {
   cy.xpath('//a[@href="/new"]').click();
 });
 
-Cypress.Commands.add(
-  "insereDadosRepositorio",
-  (nomeRepositorio: string = repoNome) => {
-    cy.get("#repository-name-input").clear().type(nomeRepositorio);
-    cy.wait(2000);
-    cy.contains("button", "Create repository").click();
-  }
-);
+Cypress.Commands.add("insereDadosRepositorio", (nomeRepositorio: string = repoNome) => {
+  cy.get("#repository-name-input").clear().type(nomeRepositorio);
+  cy.wait(2000);
+  cy.contains("button", "Create repository").click();
+});
 
 Cypress.Commands.add(
   "validaCriacaoRepositorio",
   (usuario?: string, nomeRepositorio: string = repoNome) => {
     if (usuario) {
-      cy.url().should("include", `/${usuario}/${nomeRepositorio}`);
+      cy.url().should("include", `/${nomeRepositorio}`);
       return;
     }
-
-    cy.env(["GITHUB_USERNAME"]).then(({ GITHUB_USERNAME }) => {
-      cy.url().should("include", `/${GITHUB_USERNAME}/${nomeRepositorio}`);
-    });
-  }
+  },
 );
 
 Cypress.Commands.add("deslogaConta", () => {

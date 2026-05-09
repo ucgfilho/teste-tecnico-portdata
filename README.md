@@ -23,7 +23,7 @@ GITHUB_PASSWORD=sua-senha
 
 ---
 
-## Execução dos testes Cypress
+## Execução dos testes no Cypress
 
 ```bash
 npx cypress run
@@ -35,8 +35,8 @@ ou
 npx cypress open
 ```
 
-## Execução dos testes k6
+## Execução dos testes no k6
 
 ```bash
-
+k6 run k6/tests/loadTest.js
 ```

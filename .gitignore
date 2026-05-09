@@ -1,5 +1,6 @@
 /node_modules
 .env
 *.log
-tests/cypress/videos
-tests/cypress/screenshots
+cypress/videos
+cypress/screenshots
+k6/report

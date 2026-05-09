@@ -7,7 +7,7 @@
     "cy:run": "cypress run",
     "cy:run:headed": "cypress run --headed",
     "ts:check": "tsc --noEmit",
-    "k6:run": "k6 run tests/k6/scenarios/load-test.js"
+    "k6:run": "k6 run k6/tests/loadTest.js"
   },
   "devDependencies": {
     "@types/node": "^25.6.2",
